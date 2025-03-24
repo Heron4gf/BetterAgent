@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import ttk
 import threading
 
-from FlowAgents.flow_agent import FlowAgent
 from FlowAgents.handoff_agent import HandoffAgent
 
 

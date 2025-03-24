@@ -1,8 +1,8 @@
+from typing import List
+from agents import Tool
 from FlowAgents.handoff_agent import HandoffAgent, FlowAgent, ImportanceRequest
 from IOMethods.output_methods import OutputMethod, ConsoleOutputMethod
 from IOMethods.input_methods import InputMethod, UserCLIInputMethod
-from typing import List
-from agents import Tool
 
 class FullAgent(HandoffAgent):
     def __init__(self, 

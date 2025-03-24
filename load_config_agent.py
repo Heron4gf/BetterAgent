@@ -1,5 +1,5 @@
 from FlowAgents.flow_agent import FlowAgent
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any
 from IOMethods.enums.input_type import InputType
 from IOMethods.enums.output_type import OutputType
 from IOMethods.input_methods import InputMethod
