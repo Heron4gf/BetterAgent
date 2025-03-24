@@ -19,23 +19,20 @@ class AgentsLoader:
     def load_agents(self) -> List[FlowAgent]:
         agents = []
         
-        # Process the top-level agents
-        top_level_agents = []
+        # Process all top-level agents
         for agent_name, agent_config in self.config.get("agents", {}).items():
             agent_config['name'] = agent_name
 
-            # First agent is a FullAgent
+            # First agent is a FullAgent, others are HandoffAgents
             if len(agents) == 0:
-                full_agent = self._load_agent(agent_config, is_full=True)
-                agents.append(full_agent)
+                agent = self._load_agent(agent_config, is_full=True)
             else:
-                # Other top-level agents are added to full_agent.top_level_agents
                 agent = self._load_agent(agent_config)
-                top_level_agents.append(agent)
-        
-        # If we have top-level agents, add them to the FullAgent
-        if len(agents) > 0 and len(top_level_agents) > 0:
-            agents[0].top_level_agents = top_level_agents
+            
+            # Recursively load subagents for this agent
+            self._load_agents_recursively(agent_config, agent)
+            
+            agents.append(agent)
         
         return agents
 
@@ -59,7 +56,6 @@ class AgentsLoader:
         name = config.get('name', 'unnamed_agent')
         model = config.get('model', 'gpt-4o-mini')
         system_prompt = config.get('system_prompt', '')
-        print("found agent: "+ name)
         
         # Process knowledge files/folders if any
         knowledge = config.get('knowledge', [])
@@ -82,7 +78,8 @@ class AgentsLoader:
                 system_prompt=system_prompt,
                 tools=tools,
                 output_method=output_method,
-                input_method=input_method
+                input_method=input_method,
+                subagents=[]  # Initialize with empty list, will be populated later
             )
         else:
             # Create a HandoffAgent with just the output method
@@ -91,7 +88,8 @@ class AgentsLoader:
                 model=model,
                 system_prompt=system_prompt,
                 tools=tools,
-                output_method=output_method
+                output_method=output_method,
+                subagents=[]  # Initialize with empty list, will be populated later
             )
             
         # If there's knowledge, add it as developer messages

@@ -10,7 +10,6 @@ async def main():
 
     gui = create_debug_gui(agents[0])
 
-
     while agents[0].input_method.has_next():
         await agents[0].next_interaction()
         gui.refresh()
