@@ -23,7 +23,7 @@ class AgentsLoader:
         top_level_agents = []
         for agent_name, agent_config in self.config.get("agents", {}).items():
             agent_config['name'] = agent_name
-            
+
             # First agent is a FullAgent
             if len(agents) == 0:
                 full_agent = self._load_agent(agent_config, is_full=True)
@@ -59,6 +59,7 @@ class AgentsLoader:
         name = config.get('name', 'unnamed_agent')
         model = config.get('model', 'gpt-4o-mini')
         system_prompt = config.get('system_prompt', '')
+        print("found agent: "+ name)
         
         # Process knowledge files/folders if any
         knowledge = config.get('knowledge', [])
