@@ -3,8 +3,9 @@ from agents import Agent, Runner
 from .conversation_flow.importance_message import DeveloperMessage, ImportanceRequest, ImportanceResponse
 from agents import Tool
 from typing import List
-from .load_client import load_client, isClientLoaded
+from .load_client import load_client, isClientLoaded, get_client
 from IOMethods.output_methods import OutputMethod, ConsoleOutputMethod
+from agents import OpenAIChatCompletionsModel
 
 DEFAULT_INPUT = "Continue working on the request"
 
@@ -12,7 +13,7 @@ class FlowAgent():
 
     def __init__(self, 
                  name : str, 
-                 model : str = "gpt-4o-mini", 
+                 model : str = "openai/gpt-4o-mini", 
                  system_prompt : str = "", 
                  tools : List[Tool] = [], 
                  output_method : OutputMethod = ConsoleOutputMethod()):
@@ -67,8 +68,11 @@ class FlowAgent():
         agent = Agent(
             name=self.name,
             instructions=instructions,
-            model=self.model,
-            tools=self.tools
+            model=OpenAIChatCompletionsModel(
+                model=self.model,
+                openai_client=get_client()
+            ),
+            tools=self.tools,
         )
         
         if(importance_request.message is None):

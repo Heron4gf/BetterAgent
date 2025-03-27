@@ -9,12 +9,11 @@ class FullAgent(HandoffAgent):
                  name: str, 
                  model: str = "gpt-4o-mini", 
                  system_prompt: str = "", 
-                 subagents: List[FlowAgent] = [], 
                  tools: List[Tool] = [], 
                  output_method: OutputMethod = ConsoleOutputMethod(), 
                  input_method: InputMethod = UserCLIInputMethod("Ask the agent > "),
                  top_level_agents: List[FlowAgent] = []):
-        super().__init__(name, model, system_prompt, subagents, tools, output_method)
+        super().__init__(name, model, system_prompt, tools, output_method)
         self.input_method = input_method
         self.top_level_agents = top_level_agents
 

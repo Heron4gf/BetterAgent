@@ -122,8 +122,8 @@ class AgentDebugGUI:
                 self._draw_message(message, conversation_frame)
         
         # If this is a HandoffAgent, show subagents
-        if isinstance(agent, HandoffAgent) and agent.subagents:
-            for subagent in agent.subagents:
+        if isinstance(agent, HandoffAgent) and agent.get_subagents():
+            for subagent in agent.get_subagents():
                 self._draw_agent(subagent, content_frame, level + 1)
     
     def _draw_message(self, message, parent_frame):

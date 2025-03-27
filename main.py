@@ -7,7 +7,6 @@ async def main():
     agents_loader = AgentsLoader("agents.yml")
     agents = agents_loader.load_agents()
 
-
     gui = create_debug_gui(agents[0])
 
     while agents[0].input_method.has_next():

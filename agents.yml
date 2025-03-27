@@ -3,7 +3,7 @@ output: CONSOLE
 
 agents:
   main_agent:
-    model: gpt-4o-mini
+    model: "deepseek/deepseek-chat-v3-0324:free"
     system_prompt: You are an handoff agent with a set of subagents you can handoff to using the handoffToSubagent tool
     description: "An agent that can handoff to other agents"
     knowledge: # knowledge can be an entire folder or a file name
@@ -12,7 +12,7 @@ agents:
       - "how_to_delegate"
     subagents:
       researcher_agent:
-        model: gpt-4o
+        model: "openai/gpt-4o"
         system_prompt: You are a professional researcher that can help with the project
         description: "A professional researcher that can help with the project"
         knowledge:
@@ -20,7 +20,7 @@ agents:
         tools:
           - BROWSER_USE
       project_documenter: # name of the subagent
-        model: gpt-4o-mini
+        model: "openai/gpt-4o-mini"
         system_prompt: "You help create useful documentations for the project"
         description: "An agent that can help create useful documentations for a project" # higher level agents can read description to understand what the subagent can do
         tools:
@@ -28,7 +28,7 @@ agents:
           - GENERATE_CONTRIBUTING
           - GENERATE_REFACTORING_PLAN
       coder: # we can nest handoff agents to create more complex workflows
-        model: gpt-4o-mini
+        model: "openai/gpt-4o-mini"
         system_prompt: You are a coder that can help with the project
         description: "A coder that can help with the project"
         knowledge:
@@ -38,14 +38,14 @@ agents:
           - IDE_MANAGER
         subagents:
           intelligent_code_suggestion:
-            model: o3-mini
+            model: "openai/o3-mini"
             knowledge:
               - "coding_engineer"
             system_prompt: You are an intelligent code suggestion agent, you may be asked coding related questions, your answer should be formatted in markdown
             description: "An intelligent code suggestion agent that can help with the project"
 
   analyzer_agent: # if we have multiple agents at top level, the next ones will add developer messages to the previous agents
-    model: gpt-4o-mini
+    model: "openai/gpt-4o-mini"
     system_prompt: You analyze the conversation and determine if the agent is working as intended, if not you may respond to the other agent to fix the issue
     description: "An agent that can analyze the conversation and determine if the agent is working as intended"
     knowledge:

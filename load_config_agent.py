@@ -50,7 +50,7 @@ class AgentsLoader:
             subagents.append(subagent)
         
         # Set the subagents on the parent agent
-        parent_agent.subagents = subagents
+        parent_agent.set_subagents(subagents)
 
     def _load_agent(self, config: Dict[str, Any], is_full: bool = False) -> FlowAgent:
         name = config.get('name', 'unnamed_agent')
@@ -78,8 +78,7 @@ class AgentsLoader:
                 system_prompt=system_prompt,
                 tools=tools,
                 output_method=output_method,
-                input_method=input_method,
-                subagents=[]  # Initialize with empty list, will be populated later
+                input_method=input_method
             )
         else:
             # Create a HandoffAgent with just the output method
@@ -88,8 +87,7 @@ class AgentsLoader:
                 model=model,
                 system_prompt=system_prompt,
                 tools=tools,
-                output_method=output_method,
-                subagents=[]  # Initialize with empty list, will be populated later
+                output_method=output_method
             )
             
         # If there's knowledge, add it as developer messages
